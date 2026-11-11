@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "nombre": "Jaime Gómez Pascual",
+    "titulo": "Ingeniero Multicloud | DevOps & Seguridad",
+    "headline": "Diseño, automatizo y despliego infraestructura cloud.",
+    "tagline": "Ingeniero cloud certificado en AWS y Azure. Automatizo infraestructura con Terraform, contenedores y pipelines de CI/CD.",
+    "ubicacion": "Madrid, España",
+    "disponibilidad": "Abierto a nuevas oportunidades",
+    "email": "gomezpascualjaime@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/jaimegomezpascual/",
+    "github": "https://github.com/jaimegp03",
+    "cv_url": "/cv-jaime-gomez-pascual.pdf"
+  },
+
+  "sobre_mi": {
+    "resumen": "La informática es mi vocación: disfruto usando la tecnología para resolver problemas y aportar valor real a clientes y empresas, con una actitud cercana, resolutiva y orientada a la calidad. Tengo gran capacidad de aprendizaje y me adapto con rapidez a nuevas herramientas y metodologías, algo esencial en el mundo multicloud. He completado el Máster en Ingeniería Multicloud, DevOps y Seguridad en Tajamar Tech (2026), sobre una base de Administración de Sistemas Informáticos en Red y varias certificaciones oficiales de AWS y Microsoft Azure. Valoro especialmente el trabajo en equipo y la comunicación como base para lograr buenos resultados.",
+    "highlights": [
+      "Certificado AWS Certified Solutions Architect – Associate",
+      "Múltiples certificaciones oficiales de Microsoft Azure",
+      "Formación especializada en Administración de Sistemas en Red",
+      "Máster en Ingeniería Multicloud, DevOps y Seguridad completado (Tajamar, 2026)",
+      "Interés en Infraestructura como Código y contenedores"
+    ],
+    "capacidades": [
+      "Trabajo en equipo",
+      "Responsabilidad en el trabajo",
+      "Sociable",
+      "Capacidad de autoaprendizaje",
+      "Resolución de problemas"
+    ]
+  },
+
+  "idiomas": [
+    { "idioma": "Español", "nivel": "Nativo" },
+    { "idioma": "Inglés", "nivel": "B1" }
+  ],
+
+  "stack": [
+    {
+      "id": "cloud",
+      "titulo": "Cloud providers",
+      "resumen": "Entornos en AWS y Azure: identidades, redes, cómputo y almacenamiento, con certificación oficial en ambos proveedores.",
+      "tecnologias": [
+        { "nombre": "AWS", "detalle": "EC2, S3, IAM, VPC, CloudFront · Solutions Architect Associate" },
+        { "nombre": "Azure", "detalle": "Administración (AZ-104), seguridad (AZ-500) y fundamentos (AZ-900)" }
+      ]
+    },
+    {
+      "id": "iac",
+      "titulo": "Infraestructura como código",
+      "resumen": "Infraestructura declarada, versionada y reproducible, en lugar de clics en una consola.",
+      "tecnologias": [
+        { "nombre": "Terraform", "detalle": "Módulos y despliegues en AWS y Azure, incluido este portfolio" },
+        { "nombre": "Ansible", "detalle": "Automatización de configuración" }
+      ]
+    },
+    {
+      "id": "containers",
+      "titulo": "Contenedores y orquestación",
+      "resumen": "Aplicaciones empaquetadas para que funcionen igual en local que en producción.",
+      "tecnologias": [
+        { "nombre": "Docker", "detalle": "Imágenes multi-stage y contenedorización de aplicaciones" },
+        { "nombre": "Kubernetes", "detalle": "Conceptos de orquestación y despliegues básicos" }
+      ]
+    },
+    {
+      "id": "cicd",
+      "titulo": "CI/CD",
+      "resumen": "Cada cambio se compila, se valida y se despliega con un pipeline, sin pasos manuales.",
+      "tecnologias": [
+        { "nombre": "GitHub Actions", "detalle": "Certificación GH-200 · pipelines de build y despliegue" },
+        { "nombre": "GitLab CI", "detalle": "Runners y pipelines básicos" }
+      ]
+    },
+    {
+      "id": "network",
+      "titulo": "Sistemas y redes",
+      "resumen": "La base de todo lo demás: Linux y redes bien entendidas antes de abstraerlas en la nube.",
+      "tecnologias": [
+        { "nombre": "Linux", "detalle": "Administración de sistemas y shell scripting" },
+        { "nombre": "Networking", "detalle": "Administración de redes (ASIR)" }
+      ]
+    }
+  ],
+
+  "experiencia": [
+    {
+      "puesto": "Técnico Informático",
+      "empresa": "UNIR — Universidad Internacional de La Rioja",
+      "ubicacion": "España",
+      "tipo_empleo": "Jornada parcial",
+      "fecha_inicio": "2023-01",
+      "fecha_fin": "2025-06",
+      "descripcion": "Puesto en jornada parcial, compaginado con el Ciclo Formativo de Grado Superior en Administración de Sistemas Informáticos en Red. Encargado del despliegue y administración de la herramienta de monitorización de productividad DeskTime en la sede de Madrid.",
+      "logros": [
+        "Instalación manual de DeskTime en todos los equipos de la sede de Madrid",
+        "Estructuración de la herramienta por departamentos, asignando permisos según el cargo de cada usuario",
+        "Formación a responsables, gerentes y directores en el uso avanzado de DeskTime: informes de productividad, clasificación de aplicaciones productivas/improductivas y monitorización de equipos"
+      ],
+      "tecnologias": ["DeskTime", "Gestión de usuarios y permisos", "Soporte TI", "Formación a usuarios"]
+    }
+  ],
+
+  "proyectos": [
+    {
+      "nombre": "Multicloud-As-A-Code",
+      "tipo": "Portfolio · Infraestructura como código",
+      "problema": "Un portfolio estático cuenta lo que sé, pero no demuestra cómo trabajo con infraestructura.",
+      "solucion": "La propia web es el proyecto: una SPA en React contenedorizada con Docker, desplegable en AWS o en Azure con Terraform y publicada automáticamente con GitHub Actions.",
+      "destacados": [
+        "Dockerfile multi-stage: build con Node y runtime con Nginx y healthcheck",
+        "Dos módulos de Terraform independientes: AWS (S3 + CloudFront) y Azure (Static Web Apps)",
+        "Pipeline de CI/CD con entorno de preview por cada pull request"
+      ],
+      "pipeline": [
+        { "paso": "git push", "detalle": "rama main" },
+        { "paso": "GitHub Actions", "detalle": "npm ci · build de producción" },
+        { "paso": "Terraform", "detalle": "Azure Static Web Apps · AWS S3 + CloudFront" },
+        { "paso": "CDN global", "detalle": "HTTPS incluido" }
+      ],
+      "tecnologias": ["React", "Tailwind CSS", "Docker", "Terraform", "GitHub Actions", "Azure", "AWS"],
+      "repo_url": "https://github.com/jaimegp03/multicloud-portfolio",
+      "demo_url": ""
+    }
+  ],
+
+  "certificaciones": [
+    { "codigo": "SAA-C03", "nombre": "AWS Certified Solutions Architect – Associate", "entidad": "Amazon Web Services (AWS)", "fecha": "abr. 2026", "vencimiento": "abr. 2029", "credencial_id": "", "url": "" },
+    { "codigo": "AZ-500", "nombre": "Microsoft Certified: Azure Security Engineer Associate", "entidad": "Microsoft", "fecha": "feb. 2026", "vencimiento": "feb. 2027", "credencial_id": "ABE120BFEB16558", "url": "" },
+    { "codigo": "AZ-104", "nombre": "Microsoft Certified: Azure Administrator Associate", "entidad": "Microsoft", "fecha": "dic. 2025", "vencimiento": "dic. 2026", "credencial_id": "6002FB393ACC2D58", "url": "" },
+    { "codigo": "GH-200", "nombre": "GitHub Actions", "entidad": "Microsoft · GitHub", "fecha": "jun. 2026", "vencimiento": "jun. 2028", "credencial_id": "B7B1358F36F2FA3F", "url": "" },
+    { "codigo": "AZ-900", "nombre": "Microsoft Certified: Azure Fundamentals", "entidad": "Microsoft", "fecha": "nov. 2025", "vencimiento": "", "credencial_id": "", "url": "" }
+  ],
+
+  "formacion": [
+    {
+      "titulo": "Máster en Ingeniería Multicloud, DevOps y Seguridad",
+      "institucion": "Tajamar",
+      "fecha_inicio": "sept. 2025",
+      "fecha_fin": "jun. 2026"
+    },
+    {
+      "titulo": "Ciclo Formativo de Grado Superior — Administración de Sistemas Informáticos en Red",
+      "institucion": "Colegio Retamar",
+      "fecha_inicio": "sept. 2023",
+      "fecha_fin": "jun. 2025"
+    },
+    {
+      "titulo": "Ciclo Formativo de Grado Medio — Sistemas Microinformáticos y Redes",
+      "institucion": "Colegio Retamar",
+      "fecha_inicio": "sept. 2021",
+      "fecha_fin": "jun. 2023"
+    }
+  ]
+}
