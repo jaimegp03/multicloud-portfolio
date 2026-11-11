@@ -109,14 +109,15 @@
       "solucion": "La propia web es el proyecto: una SPA en React contenedorizada con Docker, desplegable en AWS o en Azure con Terraform y publicada automáticamente con GitHub Actions.",
       "destacados": [
         "Dockerfile multi-stage: build con Node y runtime con Nginx y healthcheck",
-        "Dos módulos de Terraform independientes: AWS (S3 + CloudFront) y Azure (Static Web Apps)",
-        "Pipeline de CI/CD con entorno de preview por cada pull request"
+        "Dos módulos de Terraform independientes: Azure (Storage, web estática) y AWS (S3 + CloudFront)",
+        "Despliegue sin secretos: GitHub Actions entra en Azure con OIDC (identidad federada) y permisos mínimos",
+        "Adaptado a una política de regiones permitidas de la suscripción, documentada en el propio código"
       ],
       "pipeline": [
         { "paso": "git push", "detalle": "rama main" },
-        { "paso": "GitHub Actions", "detalle": "npm ci · build de producción" },
-        { "paso": "Terraform", "detalle": "Azure Static Web Apps · AWS S3 + CloudFront" },
-        { "paso": "CDN global", "detalle": "HTTPS incluido" }
+        { "paso": "GitHub Actions", "detalle": "lint · build de producción" },
+        { "paso": "Login OIDC", "detalle": "identidad federada en Entra ID, sin contraseñas" },
+        { "paso": "Azure Storage", "detalle": "web estática · HTTPS · Spain Central" }
       ],
       "tecnologias": ["React", "Tailwind CSS", "Docker", "Terraform", "GitHub Actions", "Azure", "AWS"],
       "repo_url": "https://github.com/jaimegp03/multicloud-portfolio",

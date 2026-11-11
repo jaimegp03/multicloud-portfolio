@@ -43,8 +43,14 @@ export default function Hero({ meta, certificaciones = [] }) {
             <GithubIcon className="h-4 w-4" /> GitHub
           </a>
           {meta.cv_url && (
-            <a href={meta.cv_url} target="_blank" rel="noreferrer" className={btn.secondary}>
-              <FileDown className="h-4 w-4" /> CV
+            <a
+              href={meta.cv_url}
+              target="_blank"
+              rel="noreferrer"
+              title="Versión pública del CV, sin teléfono ni dirección"
+              className={btn.secondary}
+            >
+              <FileDown className="h-4 w-4" /> CV público
             </a>
           )}
         </div>

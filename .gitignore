@@ -42,3 +42,5 @@ terraform/crash.log
 /*.pdf
 .claude/
 .env
+**/tfplan
+**/*.tfplan

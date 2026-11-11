@@ -1,6 +1,6 @@
 # Multicloud-As-A-Code — Portfolio de Jaime Gómez Pascual
 
-Portafolio interactivo con estética de consola cloud / dashboard de monitorización, construido como una SPA en React, contenedorizado con Docker y desplegable como Infraestructura como Código (Terraform) en AWS o Azure.
+Portafolio interactivo con estética de consola cloud / dashboard de monitorización, construido como una SPA en React, contenedorizado con Docker y desplegado como Infraestructura como Código (Terraform) en Azure, con alternativa en AWS.
 
 **Demo:** _pendiente de URL de producción_
 
@@ -11,8 +11,9 @@ Portafolio interactivo con estética de consola cloud / dashboard de monitorizac
 - **Contenedorización:** Dockerfile multi-stage (build con Node → runtime con Nginx)
 - **IaC:** Terraform, con dos módulos independientes:
   - [`terraform/`](terraform) — AWS (S3 + CloudFront)
-  - [`terraform/azure/`](terraform/azure) — Azure Static Web Apps
-- **CI/CD:** GitHub Actions ([`.github/workflows/azure-static-web-apps.yml`](.github/workflows/azure-static-web-apps.yml)) — build y despliegue automático a Azure en cada push a `main`
+  - [`terraform/azure/`](terraform/azure) — Azure Storage (web estática) + identidad OIDC para GitHub Actions
+- **CI/CD:** GitHub Actions ([`.github/workflows/deploy-azure.yml`](.github/workflows/deploy-azure.yml)) — lint, build y despliegue automático a Azure en cada push a `main`, autenticado con OIDC (sin secretos)
+- **CV público:** `npm run cv` genera `public/cv-jaime-gomez-pascual.pdf` desde `perfil.json` (sin teléfono ni dirección)
 
 ## Desarrollo local
 
@@ -41,7 +42,9 @@ Disponible en `http://localhost:8080`.
 Ver los README de cada módulo de Terraform:
 
 - [`terraform/`](terraform) — AWS S3 + CloudFront
-- [`terraform/azure/`](terraform/azure) — Azure Static Web Apps (recomendado para esta SPA)
+- [`terraform/azure/`](terraform/azure) — Azure Storage, web estática (despliegue principal)
+
+> La suscripción Azure for Students solo permite 5 regiones europeas y Static Web Apps no está en ninguna; por eso se usa la web estática de Azure Storage en Spain Central.
 
 ## Estructura del proyecto
 

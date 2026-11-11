@@ -11,25 +11,36 @@ variable "environment" {
 }
 
 variable "location" {
-  description = "Región de Azure para el resource group (recurso de agrupación lógica, sin restricción de disponibilidad como Static Web Apps)."
+  description = "Región del resource group (solo agrupa recursos; ya existe en Switzerland North)."
   type        = string
   default     = "switzerlandnorth"
 }
 
-variable "swa_location" {
-  description = "Región para el Static Web App. A diferencia del resource group, este servicio solo existe en un subconjunto fijo de regiones a nivel mundial (westus2, centralus, eastus2, westeurope, eastasia) — Switzerland North no es una de ellas. Si una región da 403 Forbidden, prueba con otra de la lista."
+variable "storage_location" {
+  description = "Región de la cuenta de almacenamiento que sirve la web. Debe ser una de las permitidas por la política de la suscripción."
   type        = string
-  default     = "eastus2"
+  default     = "spaincentral"
 }
 
-variable "sku_tier" {
-  description = "Plan de Static Web Apps: Free o Standard (Standard añade SLA, más dominios personalizados y auth avanzada)."
+variable "storage_account_name" {
+  description = "Nombre global y único de la cuenta de almacenamiento (3-24 caracteres, minúsculas y números). Forma parte de la URL pública."
   type        = string
-  default     = "Free"
+  default     = "stjgpportfolio"
+
+  validation {
+    condition     = can(regex("^[a-z0-9]{3,24}$", var.storage_account_name))
+    error_message = "Solo minúsculas y números, entre 3 y 24 caracteres."
+  }
 }
 
-variable "custom_domain" {
-  description = "Dominio personalizado (ej. portfolio.jaimegomez.dev). Déjalo vacío para usar el dominio *.azurestaticapps.net por defecto."
+variable "github_repo" {
+  description = "Repositorio de GitHub (propietario/nombre) autorizado a desplegar mediante OIDC."
   type        = string
-  default     = ""
+  default     = "jaimegp03/multicloud-portfolio"
+}
+
+variable "github_branch" {
+  description = "Rama desde la que GitHub Actions puede desplegar."
+  type        = string
+  default     = "main"
 }

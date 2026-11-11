@@ -1,6 +1,12 @@
 # ─────────────────────────────────────────────────────────────
-# Despliegue en Azure Static Web Apps: hosting gratuito para SPA,
-# HTTPS automático y despliegue continuo vía GitHub Actions.
+# Despliegue en Azure: web estática en una cuenta de almacenamiento
+# (HTTPS incluido) y una identidad federada (OIDC) para que GitHub
+# Actions publique sin guardar ninguna contraseña ni token.
+#
+# Por qué Storage y no Static Web Apps: la suscripción Azure for
+# Students tiene una política que solo permite 5 regiones europeas
+# (spaincentral, switzerlandnorth, germanywestcentral, polandcentral,
+# swedencentral) y Static Web Apps no está disponible en ninguna.
 # ─────────────────────────────────────────────────────────────
 
 terraform {
@@ -10,6 +16,10 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 3.100"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.53"
     }
   }
 
@@ -27,3 +37,5 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
+provider "azuread" {}

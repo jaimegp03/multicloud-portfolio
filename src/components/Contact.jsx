@@ -59,10 +59,15 @@ export default function Contact({ meta }) {
           </a>
           {meta.cv_url && (
             <a href={meta.cv_url} target="_blank" rel="noreferrer" className={btn.secondary}>
-              <FileDown className="h-4 w-4" /> Descargar CV
+              <FileDown className="h-4 w-4" /> CV (versión pública)
             </a>
           )}
         </div>
+        {meta.cv_url && (
+          <p className="mt-4 max-w-xl text-sm text-fg-subtle">
+            Es una versión pública, sin teléfono ni dirección. Si necesitas el CV completo, pídemelo por email.
+          </p>
+        )}
       </div>
 
       <div className="border-t border-line">

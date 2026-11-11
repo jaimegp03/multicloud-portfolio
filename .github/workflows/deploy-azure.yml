@@ -1,0 +1,87 @@
+name: Build y despliegue en Azure
+
+# Cada push a main compila la web y la publica en la web estática de
+# Azure Storage. Los pull requests solo compilan y pasan el lint.
+# Autenticación con OIDC: sin contraseñas ni tokens guardados en GitHub.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-azure
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Lint y build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build de producción
+        run: npm run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+  deploy:
+    name: Publicar en Azure Storage
+    needs: build
+    if: github.event_name != 'pull_request' && vars.AZURE_CLIENT_ID != ''
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # necesario para pedir el token OIDC
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Login en Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Subir archivos al contenedor $web
+        env:
+          CUENTA: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+        run: |
+          # 1) Todo con revalidación (index.html, CV, imágenes)
+          az storage blob upload-batch --auth-mode login --account-name "$CUENTA" \
+            --destination '$web' --source dist --overwrite \
+            --content-cache-control 'no-cache' --only-show-errors
+          # 2) Assets con hash en el nombre: se resuben con caché larga e inmutable
+          az storage blob upload-batch --auth-mode login --account-name "$CUENTA" \
+            --destination '$web' --source dist --pattern 'assets/*' --overwrite \
+            --content-cache-control 'public, max-age=31536000, immutable' --only-show-errors
+
+      - name: URL publicada
+        env:
+          CUENTA: ${{ vars.AZURE_STORAGE_ACCOUNT }}
+        run: |
+          URL=$(az storage account show --name "$CUENTA" --query primaryEndpoints.web -o tsv)
+          echo "Publicado en $URL" >> "$GITHUB_STEP_SUMMARY"
