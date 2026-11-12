@@ -9,6 +9,7 @@
     "email": "gomezpascualjaime@gmail.com",
     "linkedin": "https://www.linkedin.com/in/jaimegomezpascual/",
     "github": "https://github.com/jaimegp03",
+    "web": "https://stjgpportfolio.z43.web.core.windows.net/",
     "cv_url": "/cv-jaime-gomez-pascual.pdf"
   },
 
@@ -121,7 +122,7 @@
       ],
       "tecnologias": ["React", "Tailwind CSS", "Docker", "Terraform", "GitHub Actions", "Azure", "AWS"],
       "repo_url": "https://github.com/jaimegp03/multicloud-portfolio",
-      "demo_url": ""
+      "demo_url": "https://stjgpportfolio.z43.web.core.windows.net/"
     }
   ],
 

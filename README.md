@@ -2,7 +2,7 @@
 
 Portafolio interactivo con estética de consola cloud / dashboard de monitorización, construido como una SPA en React, contenedorizado con Docker y desplegado como Infraestructura como Código (Terraform) en Azure, con alternativa en AWS.
 
-**Demo:** _pendiente de URL de producción_
+**Demo:** https://stjgpportfolio.z43.web.core.windows.net/
 
 ## Stack
 
