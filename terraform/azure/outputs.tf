@@ -17,5 +17,6 @@ output "github_variables" {
     AZURE_TENANT_ID       = data.azuread_client_config.current.tenant_id
     AZURE_SUBSCRIPTION_ID = split("/", azurerm_storage_account.web.id)[2]
     AZURE_STORAGE_ACCOUNT = azurerm_storage_account.web.name
+    AZURE_WEB_URL         = azurerm_storage_account.web.primary_web_endpoint
   }
 }
