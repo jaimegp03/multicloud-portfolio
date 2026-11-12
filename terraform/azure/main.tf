@@ -59,7 +59,7 @@ resource "azuread_application_federated_identity_credential" "github_main" {
   description    = "Despliegues desde ${var.github_repo} (rama ${var.github_branch})"
   audiences      = ["api://AzureADTokenExchange"]
   issuer         = "https://token.actions.githubusercontent.com"
-  subject        = "repo:${var.github_repo}:ref:refs/heads/${var.github_branch}"
+  subject        = "repo:${var.github_oidc_repo}:ref:refs/heads/${var.github_branch}"
 }
 
 # Mínimo privilegio: solo puede escribir blobs en esta cuenta.
