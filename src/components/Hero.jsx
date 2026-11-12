@@ -33,7 +33,7 @@ export default function Hero({ meta, certificaciones = [] }) {
         <p className="mt-6 max-w-xl text-lg text-pretty text-fg-muted">{meta.tagline}</p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
-          <a href={`mailto:${meta.email}`} className={btn.primary}>
+          <a href="#contacto" className={btn.primary}>
             <Mail className="h-4 w-4" /> Contactar
           </a>
           <a href={meta.linkedin} target="_blank" rel="noreferrer" className={btn.secondary}>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowUp, Check, Copy, FileDown } from 'lucide-react'
+import { ArrowUp, Check, Copy, FileDown, Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './icons/BrandIcons'
 import { Reveal } from './ui'
 import { btn } from '../lib/utils'
@@ -13,9 +13,18 @@ export default function Contact({ meta }) {
       setCopiado(true)
       setTimeout(() => setCopiado(false), 2000)
     } catch {
-      window.location.href = `mailto:${meta.email}`
+      // Sin acceso al portapapeles: se muestra el email para copiarlo a mano
+      window.prompt('Copia mi email:', meta.email)
     }
   }
+
+  // mailto: solo funciona si el equipo tiene una app de correo configurada;
+  // estos enlaces abren directamente el correo web.
+  const asunto = encodeURIComponent('Contacto desde tu portfolio')
+  const webmail = [
+    { nombre: 'Gmail', href: `https://mail.google.com/mail/?view=cm&fs=1&to=${meta.email}&su=${asunto}` },
+    { nombre: 'Outlook', href: `https://outlook.office.com/mail/deeplink/compose?to=${meta.email}&subject=${asunto}` },
+  ]
 
   return (
     <footer id="contacto" className="border-t border-line">
@@ -48,6 +57,23 @@ export default function Contact({ meta }) {
           <span role="status" className="font-mono text-xs text-accent-text">
             {copiado ? 'Copiado' : ''}
           </span>
+        </div>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          {webmail.map((w, i) => (
+            <a
+              key={w.nombre}
+              href={w.href}
+              target="_blank"
+              rel="noreferrer"
+              className={i === 0 ? btn.primary : btn.secondary}
+            >
+              <Mail className="h-4 w-4" /> Escribir con {w.nombre}
+            </a>
+          ))}
+          <a href={`mailto:${meta.email}`} className={btn.secondary}>
+            <Mail className="h-4 w-4" /> App de correo
+          </a>
         </div>
 
         <div className="mt-10 flex flex-wrap gap-3">
