@@ -68,11 +68,11 @@ export default function Contact({ meta }) {
               rel="noreferrer"
               className={i === 0 ? btn.primary : btn.secondary}
             >
-              <Mail className="h-4 w-4" /> Escribir con {w.nombre}
+              <Mail className="h-4 w-4" /> Contactar por {w.nombre}
             </a>
           ))}
           <a href={`mailto:${meta.email}`} className={btn.secondary}>
-            <Mail className="h-4 w-4" /> App de correo
+            <Mail className="h-4 w-4" /> Contactar por app de correo
           </a>
         </div>
 
