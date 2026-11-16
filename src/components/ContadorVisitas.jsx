@@ -46,7 +46,7 @@ export default function ContadorVisitas({ url }) {
 
   return (
     <p title="Contador servido por una API serverless en Azure Functions + Cosmos DB">
-      <span className="text-accent-text">●</span> {visitas.toLocaleString('es-ES')} visitas · API en Azure Functions
+      <span className="text-accent-text">●</span> {visitas.toLocaleString('es-ES')} {visitas === 1 ? 'visita' : 'visitas'} · API en Azure Functions
     </p>
   )
 }
