@@ -1,0 +1,130 @@
+name: Página de estado (Container Apps)
+
+# Cada cambio en estado/: pruebas → imagen Docker en GitHub Container
+# Registry → nueva revisión en Azure Container Apps (OIDC, sin secretos)
+# → prueba de humo.
+# Vuelta atrás: "Run workflow" con una etiqueta anterior (p. ej. sha-1a2b3c4)
+# despliega esa imagen sin volver a construir nada.
+on:
+  push:
+    branches: [main]
+    paths: ["estado/**", ".github/workflows/deploy-estado.yml"]
+  pull_request:
+    branches: [main]
+    paths: ["estado/**", ".github/workflows/deploy-estado.yml"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Etiqueta a desplegar (vacío = construir el commit actual). Ej.: sha-1a2b3c4"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-estado
+  cancel-in-progress: false
+
+env:
+  IMAGEN: ghcr.io/${{ github.repository_owner }}/portfolio-estado
+
+jobs:
+  test:
+    name: Pruebas
+    if: inputs.tag == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: estado
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: estado/requirements*.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: python -m pytest -q
+
+  imagen:
+    name: Construir y publicar la imagen
+    needs: test
+    if: github.event_name != 'pull_request' && inputs.tag == ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write # publicar en ghcr.io con el token del propio workflow
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: tag
+        run: echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: estado
+          push: true
+          build-args: APP_VERSION=${{ steps.tag.outputs.tag }}
+          tags: |
+            ${{ env.IMAGEN }}:${{ steps.tag.outputs.tag }}
+            ${{ env.IMAGEN }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Desplegar en Azure Container Apps
+    needs: imagen
+    # También corre en una vuelta atrás manual (cuando "imagen" se omite)
+    if: >-
+      always() && github.event_name != 'pull_request' && vars.AZURE_CONTAINERAPP_NAME != '' &&
+      (needs.imagen.result == 'success' || (needs.imagen.result == 'skipped' && inputs.tag != ''))
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # necesario para pedir el token OIDC
+      contents: read
+    steps:
+      - name: Login en Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Nueva revisión
+        env:
+          APP: ${{ vars.AZURE_CONTAINERAPP_NAME }}
+          RG: ${{ vars.AZURE_CONTAINERAPP_RG }}
+          TAG: ${{ inputs.tag != '' && inputs.tag || needs.imagen.outputs.tag }}
+        run: |
+          az extension add --name containerapp --upgrade --only-show-errors
+          az containerapp update -n "$APP" -g "$RG" \
+            --image "$IMAGEN:$TAG" \
+            --revision-suffix "r${GITHUB_RUN_NUMBER}" \
+            --query "properties.latestRevisionName" -o tsv
+          echo "### Desplegada la imagen \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Prueba de humo
+        env:
+          URL: ${{ vars.AZURE_ESTADO_URL }}
+        run: |
+          # El contenedor puede estar escalado a cero: el primer arranque tarda unos segundos
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -fsS "$URL/healthz" > /dev/null && RESP=$(curl -fsS "$URL/api/estado"); then
+              echo "$RESP"
+              echo "Estado publicado en $URL" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "La página de estado no responde en $URL" && exit 1

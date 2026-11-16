@@ -6,10 +6,10 @@ name: Build y despliegue en Azure
 on:
   push:
     branches: [main]
-    paths-ignore: ["api/**", "terraform/**", ".github/workflows/deploy-api.yml"]
+    paths-ignore: ["api/**", "estado/**", "terraform/**", ".github/workflows/deploy-api.yml", ".github/workflows/deploy-estado.yml"]
   pull_request:
     branches: [main]
-    paths-ignore: ["api/**", "terraform/**", ".github/workflows/deploy-api.yml"]
+    paths-ignore: ["api/**", "estado/**", "terraform/**", ".github/workflows/deploy-api.yml", ".github/workflows/deploy-estado.yml"]
   workflow_dispatch:
 
 permissions:

@@ -44,3 +44,9 @@ terraform/crash.log
 .env
 **/tfplan
 **/*.tfplan
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
