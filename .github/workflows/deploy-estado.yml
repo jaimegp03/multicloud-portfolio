@@ -108,9 +108,9 @@ jobs:
           TAG: ${{ inputs.tag != '' && inputs.tag || needs.imagen.outputs.tag }}
         run: |
           az extension add --name containerapp --upgrade --only-show-errors
+          # Los entornos Express no admiten sufijo de revisión: Azure la nombra solo
           az containerapp update -n "$APP" -g "$RG" \
             --image "$IMAGEN:$TAG" \
-            --revision-suffix "r${GITHUB_RUN_NUMBER}" \
             --query "properties.latestRevisionName" -o tsv
           echo "### Desplegada la imagen \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
 
