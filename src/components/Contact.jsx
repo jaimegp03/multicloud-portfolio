@@ -102,7 +102,14 @@ export default function Contact({ meta }) {
           <p>
             © {new Date().getFullYear()} {meta.nombre}
           </p>
-          <ContadorVisitas url={meta.api_visitas} />
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <ContadorVisitas url={meta.api_visitas} />
+            {meta.estado_url && (
+              <a href={meta.estado_url} target="_blank" rel="noreferrer" className="underline-offset-4 hover:text-fg hover:underline">
+                Estado del sistema ↗
+              </a>
+            )}
+          </div>
           <p>React · Docker · Terraform · GitHub Actions</p>
           <a href="#top" className="inline-flex items-center gap-1.5 hover:text-fg">
             Volver arriba <ArrowUp className="h-3.5 w-3.5" />

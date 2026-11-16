@@ -11,7 +11,8 @@
     "github": "https://github.com/jaimegp03",
     "web": "https://stjgpportfolio.z43.web.core.windows.net/",
     "cv_url": "/cv-jaime-gomez-pascual.pdf",
-    "api_visitas": "https://func-jgp-visitas.azurewebsites.net/api/visitas"
+    "api_visitas": "https://func-jgp-visitas.azurewebsites.net/api/visitas",
+    "estado_url": "https://ca-jgp-estado.whitemoss-6389f6d4.spaincentral.azurecontainerapps.io"
   },
 
   "sobre_mi": {
@@ -167,6 +168,28 @@
       ],
       "tecnologias": ["Azure Monitor", "Application Insights", "Log Analytics", "KQL", "Workbooks", "Terraform"],
       "repo_url": "https://github.com/jaimegp03/multicloud-portfolio/tree/main/terraform/azure-observabilidad"
+    },
+    {
+      "nombre": "Página de estado en contenedores",
+      "tipo": "Contenedores · Docker + Azure Container Apps",
+      "problema": "Desplegar una aplicación de forma repetible, poder volver a una versión anterior y no pagar cuando nadie la usa.",
+      "solucion": "Una página de estado pública en Python, empaquetada con Docker y desplegada en Azure Container Apps: comprueba en vivo la web y la API y muestra su disponibilidad histórica leída de Azure Monitor.",
+      "destacados": [
+        "Imagen Docker multi-etapa que se ejecuta sin root, publicada en GitHub Container Registry con una etiqueta por commit",
+        "Azure Container Apps con escalado a cero, HTTPS y sondas de salud",
+        "Lee Log Analytics con una identidad administrada asignada por el usuario: sin claves ni secretos",
+        "Pipeline: pruebas, build, push, nueva revisión con OIDC y prueba de humo; vuelta atrás por etiqueta",
+        "Adaptado a los entornos Express de Container Apps tras diagnosticar el cambio de comportamiento de Azure"
+      ],
+      "pipeline": [
+        { "paso": "git push", "detalle": "cambios en estado/" },
+        { "paso": "pytest", "detalle": "11 pruebas" },
+        { "paso": "Docker → GHCR", "detalle": "imagen sha-xxxxxxx" },
+        { "paso": "Container Apps", "detalle": "revisión nueva · OIDC" }
+      ],
+      "tecnologias": ["Docker", "Azure Container Apps", "Python", "FastAPI", "GHCR", "Managed Identity", "Terraform", "GitHub Actions"],
+      "repo_url": "https://github.com/jaimegp03/multicloud-portfolio/tree/main/estado",
+      "demo_url": "https://ca-jgp-estado.whitemoss-6389f6d4.spaincentral.azurecontainerapps.io"
     }
   ],
 
