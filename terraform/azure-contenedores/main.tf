@@ -30,9 +30,24 @@ resource "azurerm_container_app_environment" "env" {
   location                   = var.location
   log_analytics_workspace_id = data.azurerm_log_analytics_workspace.logs.id
   tags                       = local.tags
+
+  lifecycle {
+    # Azure crea el entorno en modo Express y le añade solo el perfil
+    # "Consumption"; no hay nada que gestionar ahí desde Terraform
+    ignore_changes = [workload_profile]
+  }
 }
 
 # ── La app: un contenedor con HTTPS público que escala a cero ───
+# Identidad propia de la app: un recurso independiente que sobrevive aunque
+# la app se borre y se vuelva a crear (sus permisos no se pierden)
+resource "azurerm_user_assigned_identity" "estado" {
+  name                = "id-${var.prefix}-estado"
+  resource_group_name = azurerm_resource_group.ca.name
+  location            = var.location
+  tags                = local.tags
+}
+
 resource "azurerm_container_app" "estado" {
   name                         = "ca-${var.prefix}-estado"
   resource_group_name          = azurerm_resource_group.ca.name
@@ -40,9 +55,12 @@ resource "azurerm_container_app" "estado" {
   revision_mode                = "Single"
   tags                         = local.tags
 
-  # Identidad administrada: así lee Log Analytics sin claves
+  # Identidad administrada: así lee Log Analytics sin claves.
+  # Es "asignada por el usuario" porque los entornos Express (el modo que Azure
+  # crea por defecto) no admiten la identidad asignada por el sistema.
   identity {
-    type = "SystemAssigned"
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.estado.id]
   }
 
   template {
@@ -55,6 +73,11 @@ resource "azurerm_container_app" "estado" {
       cpu    = 0.25
       memory = "0.5Gi"
 
+      # Le dice a DefaultAzureCredential qué identidad usar
+      env {
+        name  = "AZURE_CLIENT_ID"
+        value = azurerm_user_assigned_identity.estado.client_id
+      }
       env {
         name  = "WORKSPACE_ID"
         value = data.azurerm_log_analytics_workspace.logs.workspace_id
@@ -109,7 +132,7 @@ resource "azurerm_container_app" "estado" {
 resource "azurerm_role_assignment" "app_lee_logs" {
   scope                = data.azurerm_log_analytics_workspace.logs.id
   role_definition_name = "Log Analytics Reader"
-  principal_id         = azurerm_container_app.estado.identity[0].principal_id
+  principal_id         = azurerm_user_assigned_identity.estado.principal_id
 }
 
 # GitHub Actions puede publicar nuevas revisiones, solo en este resource group
