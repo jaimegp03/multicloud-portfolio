@@ -1,0 +1,20 @@
+{
+  "name": "portfolio-api-visitas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API serverless del contador de visitas del portfolio (Azure Functions + Cosmos DB)",
+  "type": "module",
+  "main": "src/functions/*.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.5.0",
+    "@azure/functions": "^4.7.0",
+    "@azure/identity": "^4.10.0"
+  }
+}

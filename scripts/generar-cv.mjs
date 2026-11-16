@@ -68,11 +68,11 @@ h1 { margin: 9px 0 0; font-size: 27pt; line-height: 1; letter-spacing: -0.04em; 
 
 /* Cuerpo a dos columnas */
 .cuerpo { flex: 1; display: grid; grid-template-columns: 64mm 1fr; }
-aside { background: var(--side); padding: 8mm 7mm 8mm 14mm; border-right: 1px solid var(--line); }
-main { padding: 8mm 14mm 8mm 9mm; }
+aside { background: var(--side); padding: 7mm 7mm 6mm 14mm; border-right: 1px solid var(--line); }
+main { padding: 7mm 14mm 6mm 9mm; }
 h2 { margin: 0 0 7px; display: flex; align-items: center; gap: 7px; font: 600 7.4pt 'Geist Mono', monospace; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink); }
 h2::before { content: ''; width: 9px; height: 2px; background: var(--olive); }
-.bloque + .bloque { margin-top: 6.5mm; }
+.bloque + .bloque { margin-top: 5.5mm; }
 p { margin: 0; }
 
 /* Barra lateral */
@@ -103,9 +103,10 @@ p { margin: 0; }
 .sub { color: var(--muted); font-size: 8pt; margin-top: 1px; }
 ul.logros { margin: 4px 0 0; padding-left: 13px; color: #2b2f35; }
 ul.logros li { margin: 1.5px 0; }
-.proyecto { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; }
+.proyecto { border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; }
+.proyecto + .proyecto { margin-top: 5px; }
 .proyecto .sub { margin-top: 3px; color: #2b2f35; font-size: 8.3pt; }
-.proyecto .chips { margin-top: 6px; }
+.proyecto .chips { margin-top: 4px; }
 .proyecto .chip { background: var(--side); }
 
 footer { display: flex; justify-content: space-between; gap: 10mm; padding: 3.5mm 14mm; border-top: 1px solid var(--line); font: 6.8pt 'Geist Mono', monospace; color: var(--soft); }
@@ -185,7 +186,7 @@ footer b { color: var(--olive); font-weight: 500; }
 
     ${
       proyectos?.length
-        ? `<div class="bloque"><h2>Proyecto destacado</h2>${lista(
+        ? `<div class="bloque"><h2>Proyectos destacados</h2>${lista(
             proyectos.slice(0, 2),
             (p) => `<div class="proyecto"><div class="cab"><b>${esc(p.nombre)}</b><span class="mono">${esc(p.tipo ?? '')}</span></div><p class="sub">${esc(p.solucion ?? p.descripcion)}</p><div class="chips">${lista(p.tecnologias, (t) => `<span class="chip">${esc(t)}</span>`)}</div></div>`,
           )}</div>`

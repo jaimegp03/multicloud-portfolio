@@ -10,7 +10,8 @@
     "linkedin": "https://www.linkedin.com/in/jaimegomezpascual/",
     "github": "https://github.com/jaimegp03",
     "web": "https://stjgpportfolio.z43.web.core.windows.net/",
-    "cv_url": "/cv-jaime-gomez-pascual.pdf"
+    "cv_url": "/cv-jaime-gomez-pascual.pdf",
+    "api_visitas": "https://func-jgp-visitas.azurewebsites.net/api/visitas"
   },
 
   "sobre_mi": {
@@ -123,6 +124,28 @@
       "tecnologias": ["React", "Tailwind CSS", "Docker", "Terraform", "GitHub Actions", "Azure", "AWS"],
       "repo_url": "https://github.com/jaimegp03/multicloud-portfolio",
       "demo_url": "https://stjgpportfolio.z43.web.core.windows.net/"
+    },
+    {
+      "nombre": "API serverless de visitas",
+      "tipo": "Serverless · Azure Functions + Cosmos DB",
+      "problema": "Una API en producción no es solo código: hay que escalar, guardar datos, gestionar credenciales y saber cuándo falla.",
+      "solucion": "El contador de visitas de esta web es una API propia en Azure Functions que guarda los datos en Cosmos DB sin una sola contraseña: la función se autentica con su identidad administrada.",
+      "destacados": [
+        "Azure Functions en plan Flex Consumption: escala a cero y solo cuesta cuando hay visitas",
+        "Cosmos DB serverless con el acceso por clave desactivado; solo entra la identidad administrada (Entra ID)",
+        "Incremento atómico (patch incr): visitas simultáneas sin perder ninguna, cubierto con pruebas",
+        "Observabilidad con Application Insights y Log Analytics, con tope diario de coste",
+        "15 recursos en Terraform y despliegue por OIDC con pruebas y prueba de humo"
+      ],
+      "pipeline": [
+        { "paso": "git push", "detalle": "cambios en api/" },
+        { "paso": "Pruebas", "detalle": "node --test · concurrencia y errores" },
+        { "paso": "Login OIDC", "detalle": "permiso solo sobre la Function App" },
+        { "paso": "Azure Functions", "detalle": "despliegue · prueba de humo" }
+      ],
+      "tecnologias": ["Azure Functions", "Cosmos DB", "Node.js", "Entra ID", "App Insights", "Terraform", "GitHub Actions"],
+      "repo_url": "https://github.com/jaimegp03/multicloud-portfolio/tree/main/api",
+      "demo_url": "https://func-jgp-visitas.azurewebsites.net/api/visitas"
     }
   ],
 

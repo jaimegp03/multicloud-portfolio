@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ArrowUp, Check, Copy, FileDown, Mail } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from './icons/BrandIcons'
 import { Reveal } from './ui'
+import ContadorVisitas from './ContadorVisitas'
 import { btn } from '../lib/utils'
 
 export default function Contact({ meta }) {
@@ -101,6 +102,7 @@ export default function Contact({ meta }) {
           <p>
             © {new Date().getFullYear()} {meta.nombre}
           </p>
+          <ContadorVisitas url={meta.api_visitas} />
           <p>React · Docker · Terraform · GitHub Actions</p>
           <a href="#top" className="inline-flex items-center gap-1.5 hover:text-fg">
             Volver arriba <ArrowUp className="h-3.5 w-3.5" />
