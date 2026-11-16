@@ -146,6 +146,27 @@
       "tecnologias": ["Azure Functions", "Cosmos DB", "Node.js", "Entra ID", "App Insights", "Terraform", "GitHub Actions"],
       "repo_url": "https://github.com/jaimegp03/multicloud-portfolio/tree/main/api",
       "demo_url": "https://func-jgp-visitas.azurewebsites.net/api/visitas"
+    },
+    {
+      "nombre": "Observabilidad y alertas",
+      "tipo": "Operaciones · Azure Monitor + KQL",
+      "problema": "Sin monitorización, una caída se descubre cuando un usuario se queja.",
+      "solucion": "La web y la API están vigiladas como en un equipo de operaciones: una prueba sintética cada 15 minutos, alertas por email y un panel en Azure Monitor construido con consultas KQL.",
+      "destacados": [
+        "Prueba de disponibilidad que valida código 200, contenido de la respuesta y caducidad del certificado HTTPS",
+        "Alertas por email: API caída, errores 5xx a visitantes reales y latencia alta",
+        "Registros de la web estática en Log Analytics: visitantes y descargas del CV sin contar duplicados",
+        "Panel (Workbook) definido como código, que excluye el tráfico de pruebas y del pipeline",
+        "Coste ajustado a ≈2 $/mes consultando la API de precios de Azure"
+      ],
+      "pipeline": [
+        { "paso": "Prueba sintética", "detalle": "cada 15 min · Ámsterdam" },
+        { "paso": "App Insights", "detalle": "resultados y telemetría" },
+        { "paso": "Alerta de métricas", "detalle": "caída, errores o lentitud" },
+        { "paso": "Email", "detalle": "grupo de acción" }
+      ],
+      "tecnologias": ["Azure Monitor", "Application Insights", "Log Analytics", "KQL", "Workbooks", "Terraform"],
+      "repo_url": "https://github.com/jaimegp03/multicloud-portfolio/tree/main/terraform/azure-observabilidad"
     }
   ],
 
