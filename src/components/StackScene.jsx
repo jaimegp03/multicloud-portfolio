@@ -41,7 +41,7 @@ export default function StackScene({ stack = [] }) {
           <div className="sticky top-16 z-10 -mx-5 border-b border-line bg-bg/90 px-5 py-4 backdrop-blur-md md:-mx-8 md:px-8 lg:top-16 lg:mx-0 lg:flex lg:h-[calc(100vh-4rem)] lg:items-center lg:self-start lg:border-0 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
             <figure className="m-0 w-full">
               <ArchitectureDiagram active={active} />
-              <figcaption className="mt-3 flex items-center gap-2 font-mono text-[11px] text-fg-subtle lg:mt-5 lg:text-xs">
+              <figcaption className="mt-3 flex items-center gap-2 font-mono text-xs text-fg-subtle lg:mt-5 lg:text-xs">
                 <span className="shrink-0 whitespace-nowrap rounded border border-line px-1.5 py-0.5 text-fg-muted">Arquitectura de referencia</span>
                 <span className="hidden sm:inline">Ilustra cómo encajan las áreas del stack, no un proyecto concreto.</span>
               </figcaption>

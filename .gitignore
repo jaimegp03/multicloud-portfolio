@@ -50,3 +50,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .venv/
+
+# Material del post de LinkedIn (no se publica en el repo)
+/linkedin/

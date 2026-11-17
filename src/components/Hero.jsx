@@ -15,7 +15,7 @@ export default function Hero({ meta, certificaciones = [] }) {
       <div className="wrap relative pb-20 pt-16 md:pb-28 md:pt-28">
         <a
           href="#contacto"
-          className="inline-flex items-center gap-2 rounded-full border border-line bg-bg-elev px-3 py-1.5 font-mono text-xs text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+          className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-bg-elev px-3 py-1.5 font-mono text-xs text-fg-muted transition-colors hover:border-fg-subtle hover:text-fg"
         >
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:animate-none" />

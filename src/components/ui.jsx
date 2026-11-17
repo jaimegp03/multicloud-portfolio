@@ -39,7 +39,7 @@ export function SectionHeader({ index, eyebrow, title, intro }) {
 /** Etiqueta de tecnología en monoespaciada. */
 export function Tag({ children }) {
   return (
-    <span className="rounded-md border border-line bg-bg-elev-2 px-2 py-1 font-mono text-[11px] text-fg-muted">
+    <span className="rounded-md border border-line bg-bg-elev-2 px-2 py-1 font-mono text-xs text-fg-muted">
       {children}
     </span>
   )

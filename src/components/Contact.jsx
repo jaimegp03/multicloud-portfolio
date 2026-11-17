@@ -51,7 +51,7 @@ export default function Contact({ meta }) {
             type="button"
             onClick={copiar}
             aria-label={copiado ? 'Email copiado' : 'Copiar email'}
-            className="grid h-10 w-10 place-items-center rounded-lg border border-line text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-line-strong text-fg-muted transition-colors hover:border-fg-subtle hover:text-fg"
           >
             {copiado ? <Check className="h-4 w-4 text-accent-text" /> : <Copy className="h-4 w-4" />}
           </button>

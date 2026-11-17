@@ -3,7 +3,7 @@ const BTN_BASE =
 
 export const btn = {
   primary: `${BTN_BASE} bg-accent text-accent-fg hover:brightness-95`,
-  secondary: `${BTN_BASE} border border-line bg-bg-elev text-fg hover:border-line-strong hover:bg-bg-elev-2`,
+  secondary: `${BTN_BASE} border border-line-strong bg-bg-elev text-fg hover:border-fg-subtle hover:bg-bg-elev-2`,
 }
 
 const MESES = ['ene.', 'feb.', 'mar.', 'abr.', 'may.', 'jun.', 'jul.', 'ago.', 'sept.', 'oct.', 'nov.', 'dic.']

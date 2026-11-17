@@ -103,10 +103,10 @@ export default function Certifications({ certificaciones = [] }) {
             <aside aria-live="polite" className="hidden lg:block">
               <div className="sticky top-28 rounded-2xl border border-line bg-bg-elev p-6">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-md border border-line px-2 py-1 font-mono text-[11px] text-fg-muted">
+                  <span className="rounded-md border border-line px-2 py-1 font-mono text-xs text-fg-muted">
                     {emisor(cert)}
                   </span>
-                  <span className="font-mono text-[11px] text-fg-subtle">
+                  <span className="font-mono text-xs text-fg-subtle">
                     {String(active + 1).padStart(2, '0')} / {String(certificaciones.length).padStart(2, '0')}
                   </span>
                 </div>
